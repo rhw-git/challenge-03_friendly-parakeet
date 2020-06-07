@@ -12,13 +12,13 @@ var passwordCriteria = {
 };
 
 // functions to collect requirements for the passwords starts here
-// function of setting passord length
+// function of setting password length
 var setLength = function(){
   var validatedInput = false;
   while(!validatedInput){
     var requireInput = true;
       while(requireInput){
-        var length = window.prompt('Please set PASSWORD LENGHT (8 to 128 characters).');
+        var length = window.prompt('Please set PASSWORD LENGTH (8 to 128 characters).');
         // if user's input is a invalid number
         requireInput = (isNaN(length) ||length<8 || length>128 || length === null);
         if(requireInput){
@@ -77,32 +77,31 @@ var appendRange = function(array, min, max){
 var generatePassword = function(){ 
   setLength();
   setCharacterTypes();
-  var characters = [];
-  // ascii number range
+  var unicodeRange = [];
+  // unicode range
   if(passwordCriteria.characterTypes.uppercase){
-    characters = appendRange(characters,65,90);
+    unicodeRange = appendRange(unicodeRange,65,90);
   }
   if(passwordCriteria.characterTypes.lowercase){
-    characters = appendRange(characters,97,122);
+    unicodeRange = appendRange(unicodeRange,97,122);
   }
   if(passwordCriteria.characterTypes.numeric){
-    characters = appendRange(characters,48,57);
+    unicodeRange = appendRange(unicodeRange,48,57);
   }
   if(passwordCriteria.characterTypes.specialChar){
-    characters = appendRange(characters,32,47);
-    characters = appendRange(characters,58,64);
-    characters = appendRange(characters,91,96);
-    characters = appendRange(characters,123,126);
+    unicodeRange = appendRange(unicodeRange,32,47);
+    unicodeRange = appendRange(unicodeRange,58,64);
+    unicodeRange = appendRange(unicodeRange,91,96);
+    unicodeRange = appendRange(unicodeRange,123,126);
   }
-  debugger;
-  
-
- 
-
-
-  Math.floor(Math.random()*characters.length);
-
-
+  // generate random password based on unicode
+  var password = '';
+  for(i=0; i<passwordCriteria.length; i++){
+    var unicode = unicodeRange[Math.floor(Math.random()*unicodeRange.length)];
+    var character = String.fromCharCode(unicode);
+    password = password + character;
+  }
+  return password;
 }
 // functions to generate password ends here
 
@@ -113,9 +112,7 @@ var generateBtn = document.querySelector("#generate");
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
-
   passwordText.value = password;
-
 }
 
 // Add event listener to generate button
