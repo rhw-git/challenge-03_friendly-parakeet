@@ -8,11 +8,10 @@ var passwordCriteria = {
     lowercase: Boolean,
     numeric: Boolean,
     specialChar: Boolean,
-    defined: Boolean
   }
 };
 
-// functions to collect requirements for the passwords
+// functions to collect requirements for the passwords starts here
 // function of setting passord length
 var setLength = function(){
   var validatedInput = false;
@@ -31,13 +30,6 @@ var setLength = function(){
   passwordCriteria.length = parseInt(length);
   console.log(passwordCriteria.length);
 };
-
-// // function to to randominze characters
-// var characterRandom = function(){
-//   var value = Math.floor(Math.random()*);
-
-// };
-
 //function of selecting character types
 var setCharacterTypes = function(){
   var validatedInput = false;
@@ -74,13 +66,45 @@ var setCharacterTypes = function(){
   passwordCriteria.characterTypes.numeric = numeric;
   passwordCriteria.characterTypes.specialChar = specialChar;
 }
-
-// function to present with a series of prompts for password criteria
-// window prompt to select which criteria to set
+// functions to collect requirements for the passwords ends here
+var appendRange = function(array, min, max){
+  for(var i=min; i<=max; i++){
+    array.push(i);
+  };
+  return array;
+};
+// functions to generate password starts here
 var generatePassword = function(){ 
   setLength();
   setCharacterTypes();
+  var characters = [];
+  // ascii number range
+  if(passwordCriteria.characterTypes.uppercase){
+    characters = appendRange(characters,65,90);
+  }
+  if(passwordCriteria.characterTypes.lowercase){
+    characters = appendRange(characters,97,122);
+  }
+  if(passwordCriteria.characterTypes.numeric){
+    characters = appendRange(characters,48,57);
+  }
+  if(passwordCriteria.characterTypes.specialChar){
+    characters = appendRange(characters,32,47);
+    characters = appendRange(characters,58,64);
+    characters = appendRange(characters,91,96);
+    characters = appendRange(characters,123,126);
+  }
+  debugger;
+  
+
+ 
+
+
+  Math.floor(Math.random()*characters.length);
+
+
 }
+// functions to generate password ends here
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
