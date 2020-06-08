@@ -127,8 +127,6 @@ var generatePassword = function(){
   }
 
   for (var k = charTypeSel.length; k < passwordCriteria.length; k++){
-    debugger;
-    
     var charType = charTypeSel[Math.floor(Math.random()*charTypeSel.length)];
     switch(charType){
       case "u": 
@@ -145,7 +143,14 @@ var generatePassword = function(){
         break;
     }
   }
-  return password;
+  // shuffle characters
+  var shuffledPassword = '';
+  for(var i=0; i<passwordCriteria.length;i++){
+    var n = Math.floor(Math.random()*(password.length-i));
+    shuffledPassword = shuffledPassword + password[n];
+    password[n]= password[password.length-1];
+  }
+  return shuffledPassword;
 }
 // functions to generate password ends here
 
