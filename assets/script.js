@@ -1,3 +1,4 @@
+  
 // Assignment code here
 
 // define password as an object with two properties length and character type.
@@ -69,41 +70,80 @@ var setCharacterTypes = function(){
 }
 // function of selecting character types ends here
 // functions to collect requirements for the passwords ends here
-// functions to generate randome result starts here
-var appendRange = function(array, min, max){
-  for(var i=min; i<=max; i++){
-    array.push(i);
-  };
-  return array;
-};
 // functions to generate randome result ends here
+var selectUppercase = function(){
+  var unicode = Math.floor(Math.random()*26)+65;
+  return String.fromCharCode(unicode);
+};
+
+var selectLowercase = function(){
+  var unicode = Math.floor(Math.random()*26)+97;
+  return String.fromCharCode(unicode);
+}
+
+var selectNum = function(){
+  var num = Math.floor(Math.random()*10);
+  return num.toString();
+}
+
+var selectSpecialCharacter = function(){
+  var randomNum= Math.floor(Math.random()*33);
+  var unicode;
+  if(randomNum<16){
+    unicode = randomNum + 32;
+  }else if(randomNum<23){
+    unicode = randomNum + 42;
+  }else if(randomNum<29){
+    unicode = randomNum + 68;
+  }else{
+    unicode = randomNum + 94;
+  }
+  return String.fromCharCode(unicode);
+}
+
 // functions to generate password starts here
 var generatePassword = function(){ 
   setLength();
   setCharacterTypes();
+  var password = '';
   var unicodeRange = [];
-  // unicode range
+  var charTypeSel = '';
+  // select  character
   if(passwordCriteria.characterTypes.uppercase){
-    unicodeRange = appendRange(unicodeRange,65,90);
+    charTypeSel = charTypeSel + "u";
+    password = password + selectUppercase();
   }
   if(passwordCriteria.characterTypes.lowercase){
-    unicodeRange = appendRange(unicodeRange,97,122);
+    charTypeSel = charTypeSel + "l";
+    password = password + selectLowercase();
   }
   if(passwordCriteria.characterTypes.numeric){
-    unicodeRange = appendRange(unicodeRange,48,57);
+    charTypeSel = charTypeSel + "n";
+    password = password + selectNum();
   }
   if(passwordCriteria.characterTypes.specialChar){
-    unicodeRange = appendRange(unicodeRange,32,47);
-    unicodeRange = appendRange(unicodeRange,58,64);
-    unicodeRange = appendRange(unicodeRange,91,96);
-    unicodeRange = appendRange(unicodeRange,123,126);
+    charTypeSel = charTypeSel + "s";
+    password = password + selectSpecialCharacter();
   }
-  // generate random password based on unicode
-  var password = '';
-  for(i=0; i<passwordCriteria.length; i++){
-    var unicode = unicodeRange[Math.floor(Math.random()*unicodeRange.length)];
-    var character = String.fromCharCode(unicode);
-    password = password + character;
+
+  for (var k = charTypeSel.length; k < passwordCriteria.length; k++){
+    debugger;
+    
+    var charType = charTypeSel[Math.floor(Math.random()*charTypeSel.length)];
+    switch(charType){
+      case "u": 
+        password = password + selectUppercase();
+        break;
+      case "l":
+        password = password + selectLowercase();
+        break;
+      case "n":
+        password = password + selectNum();
+        break;
+      case "s":
+        password = password + selectSpecialCharacter();
+        break;
+    }
   }
   return password;
 }
