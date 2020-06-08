@@ -10,9 +10,8 @@ var passwordCriteria = {
     specialChar: Boolean,
   }
 };
-
 // functions to collect requirements for the passwords starts here
-// function of setting password length
+// function of setting password length starts here
 var setLength = function(){
   var validatedInput = false;
   while(!validatedInput){
@@ -30,7 +29,8 @@ var setLength = function(){
   passwordCriteria.length = parseInt(length);
   console.log(passwordCriteria.length);
 };
-//function of selecting character types
+// function of setting password length ends here
+// function of selecting character types starts here
 var setCharacterTypes = function(){
   var validatedInput = false;
   while(!validatedInput){
@@ -60,19 +60,23 @@ var setCharacterTypes = function(){
     }
     validatedInput = window.confirm(confirmMessage);
   };
+  console.log(passwordCriteria);
   // record input to object
   passwordCriteria.characterTypes.uppercase = uppercase;
   passwordCriteria.characterTypes.lowercase = lowercase;
   passwordCriteria.characterTypes.numeric = numeric;
   passwordCriteria.characterTypes.specialChar = specialChar;
 }
+// function of selecting character types ends here
 // functions to collect requirements for the passwords ends here
+// functions to generate randome result starts here
 var appendRange = function(array, min, max){
   for(var i=min; i<=max; i++){
     array.push(i);
   };
   return array;
 };
+// functions to generate randome result ends here
 // functions to generate password starts here
 var generatePassword = function(){ 
   setLength();
